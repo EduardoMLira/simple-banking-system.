@@ -2,12 +2,14 @@ menu = '''
   [1] Withdrawal
   [2] Deposit
   [3] Statement
+  [4] Register User
   [0] Exit
 '''
 
 available_balance = 500
 history = []
 withdrawals_made = 0
+users = []
 
 def show_statement():
     print(f'''
@@ -49,6 +51,20 @@ def deposit():
         history.append(f"Deposit of R$ {deposit_amount:.2f} completed.\n")
         print(f"Deposit of R$ {deposit_amount:.2f} successful!")
 
+def register_user():
+    name = input("Enter your full name: ")
+    birth_date = input("Enter your birth date (YYYY/MM/DD): ")
+    ssn = input("Enter your ssn (only numbers): ")
+    address = input("Enter your address (format: street, number - neighborhood - city/state): ")
+
+    if any(user['ssn'] ==  ssn for user in users):
+        print("Error: User with this SSN alredy exists.")
+        return
+    
+    users.append({'name': name, 'birth_date': birth_date, 'ssn': ssn, 'address': address})
+    print("User registered successfully!")
+
+
 while True:
     option = input(menu)
 
@@ -58,6 +74,8 @@ while True:
         deposit()
     elif option == "3":
         show_statement()
+    elif option == "4":
+        register_user()
     elif option == "0":
         print("Thank you for using Eduardo's bank")
         break
